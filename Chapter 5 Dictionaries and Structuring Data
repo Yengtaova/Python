@@ -1,0 +1,90 @@
+-----------------Chess Dictionary Validator-------------------
+In this chapter, we used the dictionary value {'1h': 'bking', '6c': 'wqueen',
+'2g': 'bbishop', '5h': 'bqueen', '3e': 'wking'} to represent a chess board.
+Write a function named isValidChessBoard() that takes a dictionary argument
+and returns True or False depending on if the board is valid.
+A valid board will have exactly one black king and exactly one white
+king. Each player can only have at most 16 pieces, at most 8 pawns, and
+all pieces must be on a valid space from '1a' to '8h'; that is, a piece can’t
+be on space '9z'. The piece names begin with either a 'w' or 'b' to represent
+white or black, followed by 'pawn', 'knight', 'bishop', 'rook', 'queen', or
+'king'. This function should detect when a bug has resulted in an improper
+chess board.
+
+def isValidateChessBoard(board_dict):
+    #check if only one white king and black king
+    bking = 0
+    wking = 0
+
+    if 'bking' not in board_dict.values() or 'wking' not in board_dict.values():
+        return False
+
+    for king in board_dict.values():
+        if king == 'bking':
+            bking += 1
+        elif king == 'wking':
+            wking += 1
+
+    if bking > 1 or wking > 1:
+        return False
+
+    #check if there are 16 pieces each
+    wpiece = 0
+    bpiece = 0
+    
+    for piece in board_dict.values():
+        if piece[0] == 'w':
+           wpiece += 1
+        elif piece[0] == 'b':
+            bpiece += 1
+
+    if wpiece >= 17 or bpiece >= 17:
+        return False
+
+    #check number of pawns not more than 8
+    wpawn = 0
+    bpawn = 0
+
+    for pawn in board_dict.values():
+        if pawn == 'bpawn':
+            bpawn += 1
+        elif pawn == 'wpawn':
+            wpawn += 1
+
+    if wpawn > 8 or bpawn > 8:
+        return False
+
+     # check for a valid location
+    board_keys = {'a1':'','a2':'','a3':'','a4':'','a5':'','a6':'','a7':'','a8':'',
+                   'b1':'','b2':'','b3':'','b4':'','b5':'','b6':'','b7':'','b8':'',
+                   'c1':'','c2':'','c3':'','c4':'','c5':'','c6':'','c7':'','c8':'',
+                   'd1':'','d2':'','d3':'','d4':'','d5':'','d6':'','d7':'','d8':'',
+                   'e1':'','e2':'','e3':'','e4':'','e5':'','e6':'','e7':'','e8':'',
+                   'f1':'','f2':'','f3':'','f4':'','f5':'','f6':'','f7':'','f8':'',
+                   'g1':'','g2':'','g3':'','g4':'','g5':'','g6':'','g7':'','g8':'',
+                   'h1':'','h2':'','h3':'','h4':'','h5':'','h6':'','h7':'','h8':''}
+
+    for key in board_dict.keys():
+        if key not in board_keys.keys():
+            return False
+
+    #check the piece if it begin with 'w' or 'b'
+    for pieces in board_dict.values():
+        if pieces[0] != "w" and pieces[0] != "b":
+            return False
+
+    #check if the piece name is valid
+    piece_name = ['pawn','knight','bishop','rook','queen','king']
+    for i in board_dict.values():
+        if i[1:] not in piece_name:
+            return False
+
+    return True
+
+print(isValidateChessBoard({'h1': 'bking', 'c6': 'wqueen','g2': 'bbishop', 'h5': 'bqueen', 'e3': 'wking'})) # True
+print(isValidateChessBoard({'h8': 'wking', 'c6': 'wqueen','g2': 'bbishop', 'h5': 'bqueen', 'e3': 'wpawn'})) # False : dont have black king
+print(isValidateChessBoard({"a1": "wking", "a2": "wking", "c3": "bbishop"}))  # False: cannot have 2 white kings, no bking
+print(isValidateChessBoard({"a1": "bking", "z9": "wking"}))  # False: z9 is an invalid position
+print(isValidateChessBoard({'a1':'bking','a2':'wking','h1':'bpawn','h2':'bpawn','h3':'bpawn','h4':'bpawn','h5':'bpawn','h6':'bpawn','h7':'bpawn','h8':'bpawn','g7':'bpawn','g8':'bpawn'}))#False theres more than 8 pawns
+print(isValidateChessBoard({"a1": "wking", "a2": "wking", "c3": "bbishop", "c4": "bking"})) # False: cannot have 2 white kings and 1 black king
+
