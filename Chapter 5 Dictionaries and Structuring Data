@@ -88,3 +88,57 @@ print(isValidateChessBoard({"a1": "bking", "z9": "wking"}))  # False: z9 is an i
 print(isValidateChessBoard({'a1':'bking','a2':'wking','h1':'bpawn','h2':'bpawn','h3':'bpawn','h4':'bpawn','h5':'bpawn','h6':'bpawn','h7':'bpawn','h8':'bpawn','g7':'bpawn','g8':'bpawn'}))#False theres more than 8 pawns
 print(isValidateChessBoard({"a1": "wking", "a2": "wking", "c3": "bbishop", "c4": "bking"})) # False: cannot have 2 white kings and 1 black king
 
+########################################################################################################################
+-------------------Fantasy Game Inventory----------------------
+You are creating a fantasy video game. The data structure to model the
+player’s inventory will be a dictionary where the keys are string values
+describing the item in the inventory and the value is an integer value
+detailing how many of that item the player has. For example, the dictionary
+value {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+means the player has 1 rope, 6 torches, 42 gold coins, and so on.
+Write a function named displayInventory() that would take any possible
+“inventory” and display it like the following:
+Inventory:
+12 arrow
+42 gold coin
+1 rope
+6 torch
+1 dagger
+Total number of items: 62
+
+stuff = {'rope':1, 'torch':6, 'gold coin':42, 'dagger':1, 'arrow':12}
+
+def displayInventory(inventory):
+    print("Inventory:")
+    item_total = 0
+    for k, v in inventory.items():
+       print(str(v) + ' ' + k)
+       item_total += v
+    print("Total number of items: " + str(item_total))
+
+displayInventory(stuff)
+
+######################################################################################################################
+---------------------List to Dictionary Function for Fantasy Game Inventory-------------------------
+Imagine that a vanquished dragon’s loot is represented as a list of strings
+like this:
+dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
+
+Write a function named addToInventory(inventory, addedItems), where the
+inventory parameter is a dictionary representing the player’s inventory (like
+in the previous project) and the addedItems parameter is a list like dragonLoot.
+The addToInventory() function should return a dictionary that represents the
+updated inventory. Note that the addedItems list can contain multiples of the
+same item. Your code could look something like this:
+
+def addToInventory(inventory, addedItems):
+    updatedInvent ={}
+    for i in addedItems:
+        inventory.setdefault(i,0)         #check the item of addItem in Inventory. If key doesnt exist, 
+        inventory[i] = inventory[i] + 1   #set a new key with its name and value to 0. If already exist, increment the value
+    return inventory
+
+inv = {'gold coin':42, 'rope':1}
+dragonLoot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
+inv = addToInventory(inv, dragonLoot)
+displayInventory(inv)
